@@ -14,7 +14,7 @@ module.exports = function (grunt) {
         return clonedGrunt;
     }
 
-    var JSTDFLAGS_FLAGS = ['tests', 'verbose', 'captureConsole', 'preloadFiles', 'plugins', 'runnerMode', 'testOutput', 'canFail'];
+    var JSTDFLAGS_FLAGS = ['tests', 'verbose', 'captureConsole', 'preloadFiles', 'plugins', 'runnerMode', 'testOutput'];
 
     var taskName = "jstdPhantom";
 
