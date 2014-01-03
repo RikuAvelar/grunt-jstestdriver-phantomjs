@@ -294,7 +294,15 @@ module.exports = function (grunt) {
 
             Q.delay(options.timeout).then(onTimeout);
 
-            startServer().then(startBrowser).then(runTests).then(handleTestResults).then(deferred.resolve);
+            var serverQueue;
+
+            if (childProcesses.length < 2) {
+                serverQueue = startServer().then(startBrowser).then(runTests);
+            } else {
+                serverQueue = runTests();
+            }
+
+            serverQueue.then(handleTestResults).then(deferred.resolve);
 
             return deferred.promise;
         }
