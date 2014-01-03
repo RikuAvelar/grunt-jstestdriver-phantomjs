@@ -8,6 +8,12 @@
 'use strict';
 module.exports = function (grunt) {
 
+    function silentGrunt(grunt) {
+        var clonedGrunt = _.clone(grunt);
+        clonedGrunt.warn = function() {};
+        return clonedGrunt;
+    }
+
     var JSTDFLAGS_FLAGS = ['tests', 'verbose', 'captureConsole', 'preloadFiles', 'plugins', 'runnerMode', 'testOutput'];
 
     var taskName = "jstdPhantom";
@@ -150,7 +156,7 @@ module.exports = function (grunt) {
                 childProcesses.push(server);
 
                 function poll () {
-                    grunt.log.write(".")
+                    grunt.log.write(".");
 
                     var httpOptions = {
                       host: 'localhost',
@@ -186,7 +192,7 @@ module.exports = function (grunt) {
 
                 phantomjs.on('onResourceReceived', function(request){
 
-                    if(/\/capture$/.test(request.url) && request.status == 404){
+                    if(/\/capture$/.test(request.url) && request.status === 404){
                         itDidntWork('server did not respond');
                     }
                     if(/\/heartbeat$/.test(request.url)){
@@ -279,7 +285,7 @@ module.exports = function (grunt) {
                 }
                 else {
                     killChildProcesses().then(function() {
-                        runJSTestDriver(configFileLocation, options)
+                        runJSTestDriver(configFileLocation, options);
                     });
                 }
             }
@@ -303,10 +309,4 @@ module.exports = function (grunt) {
             runJSTestDriver(filename, options);
         }.bind(this));
     });
-
-    function silentGrunt(grunt) {
-        var clonedGrunt = _.clone(grunt);
-        clonedGrunt.warn = function() {};
-        return clonedGrunt;
-    }
 };

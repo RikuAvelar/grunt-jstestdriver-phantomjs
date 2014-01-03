@@ -21,7 +21,7 @@ module.exports = function (grunt) {
         jstdPhantom: {
             options: {
             },
-            files: ["task-test/jsTestDriver_jstd.conf"]
+            files: ["task-test/jsTestDriver_jstd.conf", "task-test/jsTestDriver_jas.conf"]
         }
     });
 
@@ -29,5 +29,5 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
-    grunt.registerTask('default', ['jstdPhantom', 'jshint']);
+    grunt.registerTask('default', ['jshint', 'jstdPhantom']);
 };
