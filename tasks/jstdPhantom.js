@@ -14,7 +14,7 @@ module.exports = function (grunt) {
         return clonedGrunt;
     }
 
-    var JSTDFLAGS_FLAGS = ['tests', 'verbose', 'captureConsole', 'preloadFiles', 'plugins', 'runnerMode', 'testOutput'];
+    var JSTDFLAGS_FLAGS = ['tests', 'verbose', 'captureConsole', 'preloadFiles', 'plugins', 'runnerMode', 'testOutput', 'canFail'];
 
     var taskName = "jstdPhantom";
 
@@ -34,6 +34,7 @@ module.exports = function (grunt) {
                 tests: 'all',
                 timeout: 60000,
                 retries: 3,
+                canFail: false,
                 port: _.random(1025, 5000)
             }),
             config = grunt.config.get(taskName),
@@ -41,6 +42,7 @@ module.exports = function (grunt) {
             numberOfConfigs,
             numberOfPassedTests = 0,
             numberOfFailedTests = 0,
+            numberOfErrors = 0,
             timeouts = [],
             childProcesses = [],
             jarFile = path.join(__dirname, '..', 'lib', 'jstestdriver.jar');
@@ -50,7 +52,11 @@ module.exports = function (grunt) {
         function done(success) {
             killChildProcesses().then(function () {
                 if (success === false) {
-                    grunt.fail.warn(taskName +" task failed!");
+                    if (options.canFail) {
+                        grunt.log.errorlns(taskName + " task failed, but has continued.");
+                    } else {
+                        grunt.fail.warn(taskName + " task failed!");
+                    }
                 }
                 async.apply(this, arguments);
             });
@@ -98,9 +104,9 @@ module.exports = function (grunt) {
 
         function taskComplete() {
             grunt.log.writeln('');
-            var msg = 'Total Passed: ' + numberOfPassedTests + ', Fails: ' + numberOfFailedTests;
+            var msg = 'Total Passed: ' + numberOfPassedTests + ', Fails: ' + numberOfFailedTests + ', Errors: ' + numberOfErrors;
 
-            if (numberOfFailedTests > 0) {
+            if (numberOfFailedTests > 0 || numberOfErrors > 0) {
                 grunt.log.error(msg);
                 done(false);
             } else {
@@ -256,12 +262,14 @@ module.exports = function (grunt) {
             }
 
             function setNumberOfPassesAndFails(result) {
-                var passedReg = /\d+(?=;\sFails)/,
-                    failsReg = /\d+(?=;\sErrors)/;
+                var passedReg = /Passed: (\d+);/,
+                    failsReg = /Fails: (\d+);/,
+                    errorReg = /Errors: (\d+)\)/;
 
                 if (result && result.indexOf('RuntimeException') === -1) {
-                    numberOfPassedTests += parseInt(passedReg.exec(result)[0], 10);
-                    numberOfFailedTests += parseInt(failsReg.exec(result)[0], 10);
+                    numberOfPassedTests += parseInt(passedReg.exec(result)[1], 10);
+                    numberOfFailedTests += parseInt(failsReg.exec(result)[1], 10);
+                    numberOfErrors += parseInt(errorReg.exec(result)[1], 10);
                 }
             }
 

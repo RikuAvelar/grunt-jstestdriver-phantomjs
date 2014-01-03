@@ -20,6 +20,7 @@ module.exports = function (grunt) {
         },
         jstdPhantom: {
             options: {
+                canFail: true
             },
             files: ["task-test/jsTestDriver_jstd.conf", "task-test/jsTestDriver_jas.conf"]
         }
