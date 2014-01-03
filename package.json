@@ -1,26 +1,27 @@
 {
   "name": "grunt-jstestdriver-phantomjs",
   "description": "Grunt task for unit testing with jsTestDriver and PhantomJS.",
-  "version": "0.0.6",
-  "homepage": "https://github.com/tolu/grunt-jstestdriver-phantomjs",
+  "version": "0.0.7-rikuavelar",
+  "homepage": "https://github.com/RikuAvelar/grunt-jstestdriver-phantomjs",
   "author": {
-    "name": "Tobias Lundin",
-    "email": "tobias.lundin@gmail.com"
+    "name": "Riku Avelar",
+    "email": "riku.avelar@gmail.com"
   },
   "contributors": [
-    "Anders Karlsson <andersk2@gmail.com>"
+    "Anders Karlsson <andersk2@gmail.com>",
+    "Tobias Lundin <tobias.lundin@gmail.com"
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/tolu/grunt-jstestdriver-phantomjs.git"
+    "url": "git://github.com/RikuAvelar/grunt-jstestdriver-phantomjs.git"
   },
   "bugs": {
-    "url": "https://github.com/tolu/grunt-jstestdriver-phantomjs/issues"
+    "url": "https://github.com/RikuAvelar/grunt-jstestdriver-phantomjs/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/tolu/grunt-jstestdriver-phantomjs/blob/master/LICENSE-MIT"
+      "url": "https://github.com/RikuAvelar/grunt-jstestdriver-phantomjs/blob/master/LICENSE-MIT"
     }
   ],
   "main": "Gruntfile.js",

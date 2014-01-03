@@ -57,14 +57,8 @@ To be updated...
 
 
 ## Release History
-* 2013/18/09 - v.0.0.6 - Added filtering of output when killing child processes and started using _
-* 2013/16/09 - v.0.0.5 - Adding timeout option Adding retires option. Using http module to decide when the server has started. Waiting for child processes to die.
-* 2013/13/09 - v.0.0.4 - Make sure child proceses are dead before task is completed.
-* 2013/11/09 - v.0.0.3 - Introduced promises, fix for paths and kills all spawned processes when task is done.
-* 2013/11/09 - v.0.0.2 - Changed task name to "jstdPhantom", moved grunt-lib-phantom to dependencies
-* 2013/10/09 - v0.0.1 - Added PhantomJS, downgraded jsTestDriver to v.1.3.3.d for stability. Set up task so that it spins up server, hooks up phantom AND runs the tests before exiting
-* 2013/10/09 - v0.0.0 - Forked from Ricky Clegg
-
+* 2014-1-2 - v0.0.7-rikuAvelar - Added Error Parsing, Fixed multiple conf running
+* 2014-1-2 - v0.0.6 - Forked from Tobias Lundin
 
 ## License
 Copyright (c) 2013 Tobias Lundin
