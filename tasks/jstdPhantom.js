@@ -111,6 +111,8 @@ module.exports = function (grunt) {
 
         function runJSTestDriver(configFileLocation, options) {
 
+            var deferred = Q.defer();
+
             function itDidntWork (msg) {
                 grunt.log.writeln(msg);
                 done(false);
@@ -292,7 +294,9 @@ module.exports = function (grunt) {
 
             Q.delay(options.timeout).then(onTimeout);
 
-            startServer().then(startBrowser).then(runTests).then(handleTestResults);
+            startServer().then(startBrowser).then(runTests).then(handleTestResults).then(deferred.resolve);
+
+            return deferred.promise;
         }
 
         if (typeof config.files === 'string') {
@@ -305,8 +309,15 @@ module.exports = function (grunt) {
 
         numberOfConfigs = config.files.length;
 
+        var confQueue = Q.defer();
+        var promise = confQueue.promise;
+
         grunt.util.async.forEach(config.files, function (filename) {
-            runJSTestDriver(filename, options);
+            promise = promise.then(function(){
+                return runJSTestDriver(filename, options);
+            });
         }.bind(this));
+
+        confQueue.resolve();
     });
 };
